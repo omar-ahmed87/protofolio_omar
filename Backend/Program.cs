@@ -27,25 +27,40 @@ var app = builder.Build();
 
 app.UseCors("AllowAll");
 
-// Serve frontend static files
-// In Railway (published), wwwroot/Frontend is next to the dll
-// Locally, Frontend folder is one level up from Backend/
-string frontendPath;
-var publishedPath = Path.Combine(AppContext.BaseDirectory, "wwwroot");
-if (Directory.Exists(publishedPath))
+string frontendPath = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+if (!Directory.Exists(frontendPath))
 {
-    frontendPath = publishedPath;
-}
-else
-{
-    frontendPath = Path.GetFullPath(Path.Combine(builder.Environment.ContentRootPath, "..", "Frontend"));
+    // Try fallback
+    var fallback = Path.GetFullPath(Path.Combine(builder.Environment.ContentRootPath, "..", "Frontend"));
+    if (Directory.Exists(fallback))
+    {
+        frontendPath = fallback;
+    }
 }
 
-app.UseStaticFiles(new StaticFileOptions
+try
 {
-    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(frontendPath),
-    RequestPath = ""
-});
+    if (Directory.Exists(frontendPath))
+    {
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(frontendPath),
+            RequestPath = ""
+        });
+    }
+    else
+    {
+        Console.WriteLine($"WARNING: Frontend directory not found at {frontendPath}. Static files will not be served.");
+    }
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"ERROR configuring static files: {ex.Message}");
+}
+
+// Diagnostic endpoint
+app.MapGet("/ping", () => Results.Ok(new { Status = "Alive", Port = port, BaseDir = AppContext.BaseDirectory, FrontendPath = frontendPath }));
+
 
 // Default page
 app.MapGet("/", () => Results.Redirect("/index.html"));
@@ -55,18 +70,25 @@ app.MapGet("/", () => Results.Redirect("/index.html"));
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated(); // Only creates if not exists — preserves data on restart
-
-    // Seed the DTracks project automatically
-    if (!db.Projects.Any())
+    try
     {
-        db.Projects.Add(new Project {
-            Name = "DTracks App",
-            Description = "This project serves for transportation and tracking.",
-            Tags = "Html, css, typescript, angular, .net",
-            Link = "https://dtracks.up.railway.app/"
-        });
-        db.SaveChanges();
+        db.Database.EnsureCreated(); // Only creates if not exists
+
+        // Seed the DTracks project automatically
+        if (!db.Projects.Any())
+        {
+            db.Projects.Add(new Project {
+                Name = "DTracks App",
+                Description = "This project serves for transportation and tracking.",
+                Tags = "Html, css, typescript, angular, .net",
+                Link = "https://dtracks.up.railway.app/"
+            });
+            db.SaveChanges();
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"ERROR initializing database: {ex.Message}");
     }
 }
 
