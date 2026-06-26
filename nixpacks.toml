@@ -1,6 +1,11 @@
 [phases.setup]
 nixPkgs = ["dotnet-sdk_7"]
 
+[phases.install]
+cmds = [
+  "dotnet restore Backend/PortfolioBackend.csproj"
+]
+
 [phases.build]
 cmds = [
   "dotnet publish Backend/PortfolioBackend.csproj -c Release -o /app/publish",
