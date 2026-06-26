@@ -8,10 +8,10 @@ cmds = [
 
 [phases.build]
 cmds = [
-  "dotnet publish Backend/PortfolioBackend.csproj -c Release -o out",
-  "mkdir -p out/wwwroot",
-  "cp -r Frontend/. out/wwwroot/"
+  "dotnet publish Backend/PortfolioBackend.csproj -c Release -o publish_dir",
+  "mkdir -p publish_dir/wwwroot",
+  "cp -r Frontend/. publish_dir/wwwroot/"
 ]
 
 [start]
-cmd = "cd out && dotnet PortfolioBackend.dll"
+cmd = "cd publish_dir && ls -la && dotnet PortfolioBackend.dll"
