@@ -4,7 +4,7 @@
     "builder": "nixpacks"
   },
   "deploy": {
-    "startCommand": "dotnet PortfolioBackend.dll",
+    "startCommand": "cd publish_dir && dotnet PortfolioBackend.dll",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 5
   }
