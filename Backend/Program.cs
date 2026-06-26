@@ -21,7 +21,8 @@ builder.Services.AddCors(options =>
 
 // Bind to the PORT environment variable provided by Railway, or 5000 locally
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-builder.WebHost.UseUrls($"http://*:{port}", "http://*:5000", "http://*:8080");
+var urls = new System.Collections.Generic.HashSet<string> { $"http://*:{port}", "http://*:5000", "http://*:8080" };
+builder.WebHost.UseUrls(urls.ToArray());
 
 var app = builder.Build();
 
