@@ -1,0 +1,10 @@
+providers:
+  - name: dotnet
+    version: "7"
+
+cmds:
+  - dotnet publish Backend/PortfolioBackend.csproj -c Release -o /app/publish
+  - mkdir -p /app/publish/wwwroot
+  - cp -r Frontend/. /app/publish/wwwroot/
+
+start: cd /app/publish && dotnet PortfolioBackend.dll

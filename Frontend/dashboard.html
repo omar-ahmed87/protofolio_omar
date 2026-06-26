@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard — Omar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0c0c14;
+            --bg-2: #12121e;
+            --surface: #181828;
+            --surface-2: #1e1e32;
+            --border: #2a2a40;
+            --border-light: #3a3a55;
+            --accent: #6c5ce7;
+            --accent-light: #a29bfe;
+            --accent-glow: rgba(108,92,231,0.15);
+            --cyan: #00cec9;
+            --cyan-glow: rgba(0,206,201,0.15);
+            --danger: #ff6b6b;
+            --danger-glow: rgba(255,107,107,0.15);
+            --success: #00b894;
+            --success-glow: rgba(0,184,148,0.15);
+            --warning: #fdcb6e;
+            --text: #f5f5fa;
+            --text-2: #c0c0d0;
+            --text-3: #8585a0;
+            --radius: 16px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, sans-serif;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        /* ─── BACKGROUND PATTERN ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 0%, rgba(108,92,231,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(0,206,201,0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ─── HEADER ─── */
+        .dash-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(12, 12, 20, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dash-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .dash-header h1 .dot { color: var(--accent); }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .header-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            border-radius: 10px;
+            padding: 0.45rem 1rem;
+            font-size: 0.82rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .header-btn:hover {
+            background: var(--surface-2);
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
+        /* ─── STATS ─── */
+        .stats-row {
+            position: relative;
+            z-index: 1;
+            padding: 1.5rem 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.8rem 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 160px;
+        }
+
+        .stat-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .stat-icon.purple { background: var(--accent-glow); }
+        .stat-icon.teal { background: var(--cyan-glow); }
+        .stat-icon.orange { background: rgba(253,203,110,0.15); }
+
+        .stat-info { display: flex; flex-direction: column; }
+        .stat-num { font-size: 1.3rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+        .stat-label { font-size: 0.72rem; color: var(--text-3); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+
+        /* ─── MAIN ─── */
+        .dash-main {
+            position: relative;
+            z-index: 1;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ─── SECTION TITLES ─── */
+        .section-heading {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-heading .badge {
+            background: var(--accent-glow);
+            color: var(--accent-light);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.15rem 0.6rem;
+            border-radius: 50px;
+        }
+
+        /* ─── CARDS ─── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+
+        .card:hover {
+            border-color: var(--border-light);
+        }
+
+        /* ─── FORM STYLES ─── */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .form-grid .full { grid-column: 1 / -1; }
+
+        .form-group label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-2);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.03em;
+        }
+
+        .form-input {
+            width: 100%;
+            background: var(--bg-2);
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            outline: none;
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+
+        .form-input::placeholder { color: var(--text-3); }
+
+        .form-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        textarea.form-input { resize: vertical; min-height: 80px; }
+
+        .form-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 0.7rem 1.8rem;
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108,92,231,0.35);
+        }
+
+        #projMsg {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* ─── GRID FOR ITEMS ─── */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1rem;
+        }
+
+        /* ─── PROJECT / MESSAGE CARD ─── */
+        .item-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.25rem 1.5rem;
+            transition: all 0.25s;
+            position: relative;
+        }
+
+        .item-card:hover {
+            border-color: var(--border-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.6rem;
+            gap: 0.75rem;
+        }
+
+        .item-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text);
+        }
+
+        .item-meta {
+            font-size: 0.78rem;
+            color: var(--text-3);
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .item-badge {
+            background: var(--accent-glow);
+            color: var(--accent-light);
+            border-radius: 50px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 0.15rem 0.6rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .item-body {
+            color: var(--text-2);
+            font-size: 0.88rem;
+            line-height: 1.65;
+            white-space: pre-wrap;
+        }
+
+        .item-link {
+            color: var(--cyan);
+            font-size: 0.82rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .item-link:hover { color: var(--accent-light); }
+
+        /* ─── DELETE BUTTON ─── */
+        .btn-delete {
+            background: transparent;
+            border: 1.5px solid rgba(255,107,107,0.3);
+            color: var(--danger);
+            border-radius: 8px;
+            padding: 0.3rem 0.75rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .btn-delete:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(255,107,107,0.3);
+        }
+
+        /* ─── EMPTY STATE ─── */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-3);
+        }
+
+        .empty-state .icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+        /* ─── LOADING ─── */
+        #loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-3);
+        }
+
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ─── TOAST NOTIFICATION ─── */
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .toast {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            min-width: 300px;
+            max-width: 420px;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+            animation: slideIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+            backdrop-filter: blur(20px);
+        }
+
+        .toast.exit { animation: slideOut 0.3s ease forwards; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(60px) scale(0.9); }
+            to { opacity: 1; transform: translateX(0) scale(1); }
+        }
+        @keyframes slideOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(60px); }
+        }
+
+        .toast-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .toast.success .toast-icon { background: var(--success-glow); }
+        .toast.error .toast-icon { background: var(--danger-glow); }
+        .toast.info .toast-icon { background: var(--accent-glow); }
+
+        .toast-content { flex: 1; }
+        .toast-title { font-weight: 600; font-size: 0.88rem; margin-bottom: 0.1rem; }
+        .toast-message { font-size: 0.8rem; color: var(--text-3); }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--text-3);
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        .toast-close:hover { color: var(--text); }
+
+        /* ─── CONFIRM MODAL ─── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .modal-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: scaleIn 0.25s cubic-bezier(0.34,1.56,0.64,1);
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.85); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--danger-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-desc {
+            font-size: 0.88rem;
+            color: var(--text-3);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        .btn-modal {
+            border-radius: 10px;
+            padding: 0.6rem 1.4rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-cancel {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+        .btn-cancel:hover {
+            background: var(--surface-2);
+            color: var(--text);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background: #ee5a5a;
+            box-shadow: 0 4px 12px rgba(255,107,107,0.35);
+        }
+
+        /* ─── SPACER ─── */
+        .section-gap { margin-bottom: 2.5rem; }
+
+        /* ─── SCROLLBAR ─── */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--accent), var(--cyan));
+            border-radius: 4px;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 700px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .items-grid { grid-template-columns: 1fr; }
+            .dash-header { padding: 0 1rem; }
+            .dash-main { padding: 1.25rem; }
+            .stats-row { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Header -->
+    <header class="dash-header">
+        <h1>OMAR<span class="dot">.</span> Dashboard</h1>
+        <div class="header-actions">
+            <button class="header-btn" onclick="refreshAll()">↻ Refresh</button>
+            <a href="index.html" class="header-btn">← Portfolio</a>
+        </div>
+    </header>
+
+    <!-- Stats -->
+    <div class="stats-row" id="statsBar" style="display:none">
+        <div class="stat-card">
+            <div class="stat-icon purple">📬</div>
+            <div class="stat-info">
+                <div class="stat-num" id="statTotal">0</div>
+                <div class="stat-label">Total Messages</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon teal">📧</div>
+            <div class="stat-info">
+                <div class="stat-num" id="statEmail">0</div>
+                <div class="stat-label">Via Email</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon orange">💬</div>
+            <div class="stat-info">
+                <div class="stat-num" id="statWhatsApp">0</div>
+                <div class="stat-label">Via WhatsApp</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <main class="dash-main">
+
+        <!-- Add Project Form -->
+        <div class="section-gap">
+            <div class="section-heading">➕ Add New Project</div>
+            <div class="card">
+                <form id="projectForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Project Name</label>
+                            <input type="text" id="projName" class="form-input" placeholder="e.g. DTracks App" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Project Link</label>
+                            <input type="url" id="projLink" class="form-input" placeholder="https://example.com" required>
+                        </div>
+                        <div class="form-group full">
+                            <label>Tags (comma separated)</label>
+                            <input type="text" id="projTags" class="form-input" placeholder="e.g. HTML, CSS, React, Node.js" required>
+                        </div>
+                        <div class="form-group full">
+                            <label>Thumbnail Image URL (Optional)</label>
+                            <input type="url" id="projImage" class="form-input" placeholder="https://example.com/image.jpg">
+                        </div>
+                        <div class="form-group full">
+                            <label>Description</label>
+                            <textarea id="projDesc" class="form-input" placeholder="Brief description of the project..." required></textarea>
+                        </div>
+                        <div class="form-group full">
+                            <div class="form-actions">
+                                <button type="submit" class="btn-accent">+ Add Project</button>
+                                <span id="projMsg"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Manage Projects -->
+        <div class="section-gap">
+            <div class="section-heading">🗂️ Manage Projects <span class="badge" id="projCount">0</span></div>
+            <div class="items-grid" id="projectsContainer">
+                <div class="empty-state"><div class="icon">📁</div><p>No projects yet.</p></div>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="section-gap">
+            <div class="section-heading">💌 Messages <span class="badge" id="msgCount">0</span></div>
+            <div id="loading">
+                <div class="spinner"></div>
+                <p>Connecting to backend...</p>
+            </div>
+            <div class="items-grid" id="messagesContainer"></div>
+        </div>
+
+    </main>
+
+    <script>
+        const API = 'http://localhost:5000/api';
+        let adminPwd = '';
+
+        // ─── TOAST SYSTEM ───
+        function showToast(type, title, message, duration = 4000) {
+            const container = document.getElementById('toastContainer');
+            const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div class="toast-icon">${icons[type] || 'ℹ️'}</div>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close" onclick="this.closest('.toast').remove()">✕</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('exit');
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+
+        // ─── PROMPT PASSWORD MODAL ───
+        function promptPassword(title = "Admin Access Required", desc = "Please enter the admin password to continue.") {
+            return new Promise((resolve) => {
+                const overlay = document.createElement('div');
+                overlay.className = 'modal-overlay';
+                overlay.innerHTML = `
+                    <div class="modal-box">
+                        <div class="modal-icon" style="background:var(--accent-glow); color:var(--accent-light)">🔒</div>
+                        <div class="modal-title">${title}</div>
+                        <div class="modal-desc">${desc}</div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <input type="password" id="modalPwd" class="form-input" placeholder="Enter password..." style="width:100%" />
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn-modal btn-cancel" id="modalCancel">Cancel</button>
+                            <button class="btn-modal btn-accent" id="modalConfirm">Unlock</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+                const input = overlay.querySelector('#modalPwd');
+                input.focus();
+
+                const cleanup = () => overlay.remove();
+                
+                overlay.querySelector('#modalConfirm').onclick = () => { resolve(input.value); cleanup(); };
+                overlay.querySelector('#modalCancel').onclick = () => { resolve(null); cleanup(); };
+                
+                input.addEventListener('keyup', (e) => {
+                    if (e.key === 'Enter') { resolve(input.value); cleanup(); }
+                });
+            });
+        }
+
+        // ─── CONFIRM MODAL ───
+        function showConfirm(title, desc) {
+            return new Promise((resolve) => {
+                const overlay = document.createElement('div');
+                overlay.className = 'modal-overlay';
+                overlay.innerHTML = `
+                    <div class="modal-box">
+                        <div class="modal-icon">🗑️</div>
+                        <div class="modal-title">${title}</div>
+                        <div class="modal-desc">${desc}</div>
+                        <div class="modal-actions">
+                            <button class="btn-modal btn-cancel" id="modalCancel">Cancel</button>
+                            <button class="btn-modal btn-danger" id="modalConfirm">Delete</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+
+                overlay.querySelector('#modalConfirm').onclick = () => { overlay.remove(); resolve(true); };
+                overlay.querySelector('#modalCancel').onclick = () => { overlay.remove(); resolve(false); };
+                overlay.onclick = (e) => { if (e.target === overlay) { overlay.remove(); resolve(false); } };
+            });
+        }
+
+        // ─── ESCAPE HTML ───
+        function esc(str) {
+            if (!str) return '';
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        // ─── FETCH MESSAGES ───
+        async function fetchMessages() {
+            const container = document.getElementById('messagesContainer');
+            const loader = document.getElementById('loading');
+
+            try {
+                const res = await fetch(`${API}/contact`, {
+                    headers: { 'x-admin-password': adminPwd }
+                });
+
+                if (res.status === 401) {
+                    showToast('error', 'Unauthorized', 'Incorrect admin password.');
+                    adminPwd = '';
+                    return;
+                }
+
+                const messages = await res.json();
+                loader.style.display = 'none';
+
+                // Stats
+                const total = messages.length;
+                document.getElementById('statTotal').textContent = total;
+                document.getElementById('statEmail').textContent = messages.filter(m => m.contactMethod === 'Email').length;
+                document.getElementById('statWhatsApp').textContent = messages.filter(m => m.contactMethod === 'WhatsApp').length;
+                document.getElementById('statsBar').style.display = 'flex';
+                document.getElementById('msgCount').textContent = total;
+
+                if (total === 0) {
+                    container.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>No messages yet. Share your portfolio!</p></div>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                messages.forEach(msg => {
+                    const date = new Date(msg.createdAt);
+                    const dateStr = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+                    const timeStr = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
+                    container.innerHTML += `
+                        <div class="item-card" id="msg-${msg.id}">
+                            <div class="item-header">
+                                <div class="item-name">${esc(msg.name)}</div>
+                                <button class="btn-delete" onclick="deleteMessage(${msg.id})">🗑 Delete</button>
+                            </div>
+                            <div class="item-meta">
+                                <span>✉️ ${esc(msg.email)}</span>
+                                <span class="item-badge">${esc(msg.contactMethod || 'Email')}</span>
+                                <span>🕒 ${dateStr} ${timeStr}</span>
+                            </div>
+                            <div class="item-body">${esc(msg.message)}</div>
+                        </div>`;
+                });
+
+            } catch (err) {
+                loader.style.display = 'none';
+                showToast('error', 'Connection Failed', 'Make sure the backend is running on port 5000.');
+            }
+        }
+
+        // ─── DELETE MESSAGE ───
+        async function deleteMessage(id) {
+            const confirmed = await showConfirm('Delete Message?', 'This action cannot be undone. The message will be permanently removed.');
+            if (!confirmed) return;
+
+            try {
+                const res = await fetch(`${API}/contact/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'x-admin-password': adminPwd }
+                });
+
+                if (res.ok || res.status === 204) {
+                    const card = document.getElementById(`msg-${id}`);
+                    if (card) {
+                        card.style.transition = 'all 0.3s ease';
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.9)';
+                        setTimeout(() => { card.remove(); }, 300);
+                    }
+                    showToast('success', 'Deleted', 'Message has been removed.');
+                    // Update stats
+                    const total = document.getElementById('statTotal');
+                    total.textContent = Math.max(0, parseInt(total.textContent) - 1);
+                    const msgCount = document.getElementById('msgCount');
+                    msgCount.textContent = total.textContent;
+                } else if (res.status === 401) {
+                    showToast('error', 'Unauthorized', 'Incorrect password.');
+                } else {
+                    showToast('error', 'Error', `Server returned status ${res.status}`);
+                }
+            } catch (e) {
+                showToast('error', 'Network Error', 'Could not connect to the server.');
+            }
+        }
+
+        // ─── FETCH PROJECTS ───
+        async function fetchProjects() {
+            const container = document.getElementById('projectsContainer');
+            try {
+                const res = await fetch(`${API}/projects`);
+                if (!res.ok) throw new Error();
+                const projects = await res.json();
+                document.getElementById('projCount').textContent = projects.length;
+
+                if (projects.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><div class="icon">📁</div><p>No projects yet. Add your first one above!</p></div>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                projects.forEach(p => {
+                    const thumbHtml = p.imageUrl
+                        ? `<img src="${esc(p.imageUrl)}" alt="${esc(p.name)}" style="width:100%;height:160px;object-fit:cover;border-radius:8px;display:block;margin-bottom:0.75rem;">`
+                        : `<div style="width:100%;height:160px;border-radius:8px;overflow:hidden;position:relative;margin-bottom:0.75rem;background:var(--bg-2);">
+                               <iframe src="${esc(p.link)}" tabindex="-1" scrolling="no"
+                                 style="width:1280px;height:720px;border:none;pointer-events:none;
+                                        transform:scale(0.258);transform-origin:top left;
+                                        position:absolute;top:0;left:0;">
+                               </iframe>
+                           </div>`;
+                    container.innerHTML += `
+                        <div class="item-card" id="proj-${p.id}">
+                            ${thumbHtml}
+                            <div class="item-header">
+                                <div class="item-name">${esc(p.name)}</div>
+                                <button class="btn-delete" onclick="deleteProject(${p.id})">🗑 Delete</button>
+                            </div>
+                            <div class="item-body" style="margin-bottom:0.5rem;">${esc(p.description)}</div>
+                            <a href="${esc(p.link)}" target="_blank" class="item-link">View Live ↗</a>
+                        </div>`;
+                });
+            } catch (e) {
+                container.innerHTML = '<div class="empty-state"><p style="color:var(--danger)">Failed to load projects.</p></div>';
+            }
+        }
+
+        // ─── DELETE PROJECT ───
+        async function deleteProject(id) {
+            const confirmed = await showConfirm('Delete Project?', 'This will remove the project from your portfolio permanently.');
+            if (!confirmed) return;
+
+            try {
+                const res = await fetch(`${API}/projects/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'x-admin-password': adminPwd }
+                });
+
+                if (res.ok || res.status === 204) {
+                    const card = document.getElementById(`proj-${id}`);
+                    if (card) {
+                        card.style.transition = 'all 0.3s ease';
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.9)';
+                        setTimeout(() => card.remove(), 300);
+                    }
+                    showToast('success', 'Deleted', 'Project has been removed.');
+                    const cnt = document.getElementById('projCount');
+                    cnt.textContent = Math.max(0, parseInt(cnt.textContent) - 1);
+                } else if (res.status === 401) {
+                    showToast('error', 'Unauthorized', 'Incorrect password.');
+                } else {
+                    showToast('error', 'Error', `Server returned status ${res.status}`);
+                }
+            } catch (e) {
+                showToast('error', 'Network Error', 'Could not reach the server.');
+            }
+        }
+
+        // ─── ADD PROJECT ───
+        document.getElementById('projectForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!adminPwd) {
+                adminPwd = await promptPassword("Enter Admin Password", "Password required to add a project.");
+                if (!adminPwd) return;
+            }
+
+            const name = document.getElementById('projName').value.trim();
+            const link = document.getElementById('projLink').value.trim();
+            const tags = document.getElementById('projTags').value.trim();
+            const imageUrl = document.getElementById('projImage').value.trim();
+            const description = document.getElementById('projDesc').value.trim();
+
+            try {
+                const res = await fetch(`${API}/projects`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-admin-password': adminPwd
+                    },
+                    body: JSON.stringify({ name, link, tags, description, imageUrl })
+                });
+
+                if (res.status === 401) {
+                    showToast('error', 'Unauthorized', 'Incorrect password. Try again.');
+                    adminPwd = '';
+                    return;
+                }
+
+                if (res.ok) {
+                    showToast('success', 'Project Added!', `"${name}" has been added to your portfolio.`);
+                    document.getElementById('projectForm').reset();
+                    fetchProjects();
+                } else {
+                    showToast('error', 'Error', 'Could not add the project. Try again.');
+                }
+            } catch (err) {
+                showToast('error', 'Network Error', 'Could not connect to the server.');
+            }
+        });
+
+        // ─── REFRESH ALL ───
+        function refreshAll() {
+            fetchMessages();
+            fetchProjects();
+            showToast('info', 'Refreshed', 'Data has been reloaded.');
+        }
+
+        // ─── VERIFY PASSWORD WITH BACKEND ───
+        async function verifyPassword(pwd) {
+            try {
+                const res = await fetch(`${API}/contact`, {
+                    headers: { 'x-admin-password': pwd }
+                });
+                return res.status !== 401;
+            } catch {
+                return false;
+            }
+        }
+
+        // ─── INIT ───
+        async function init() {
+            // Hide main content until authenticated
+            document.querySelector('.dash-main').style.display = 'none';
+            document.querySelector('.dash-header').style.display = 'none';
+
+            let verified = false;
+            let attempts = 0;
+
+            while (!verified) {
+                attempts++;
+                const title = attempts === 1
+                    ? 'Admin Access Required'
+                    : `Wrong Password (Attempt ${attempts}) — Try Again`;
+
+                adminPwd = await promptPassword(title, 'Enter the admin password to access the dashboard.');
+
+                if (!adminPwd) {
+                    // User hit Cancel — block completely
+                    document.body.innerHTML = `
+                        <div style="
+                            display:flex; flex-direction:column; align-items:center; justify-content:center;
+                            height:100vh; background:var(--bg); color:var(--text-3); font-family:Inter,sans-serif; gap:1rem;
+                        ">
+                            <div style="font-size:3rem;">🔒</div>
+                            <div style="font-size:1.1rem; font-weight:600; color:var(--danger)">Access Denied</div>
+                            <div style="font-size:0.9rem;">Password is required to access this dashboard.</div>
+                            <a href="/index.html" style="margin-top:1rem; color:var(--accent-light); font-size:0.9rem;">← Back to Portfolio</a>
+                        </div>`;
+                    return;
+                }
+
+                verified = await verifyPassword(adminPwd);
+
+                if (!verified) {
+                    showToast('error', 'Wrong Password', 'The password you entered is incorrect. Please try again.');
+                }
+            }
+
+            // Auth passed — show the dashboard
+            document.querySelector('.dash-main').style.display = '';
+            document.querySelector('.dash-header').style.display = '';
+
+            await fetchMessages();
+            await fetchProjects();
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+
+    </script>
+</body>
+</html>

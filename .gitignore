@@ -1,0 +1,18 @@
+## .NET
+Backend/bin/
+Backend/obj/
+*.user
+*.suo
+.vs/
+
+## SQLite DB (will be created fresh on Railway)
+Backend/*.db
+Backend/*.db-shm
+Backend/*.db-wal
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Node
+node_modules/

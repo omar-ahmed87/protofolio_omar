@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omar Ahmed — Front‑End Developer & UI/UX Designer</title>
+  <meta name="description" content="Omar Ahmed Fathi – Front‑End Developer crafting responsive, pixel‑perfect web experiences. Open to freelance, remote, and full‑time opportunities.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <nav id="mainNav">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">Omar<span>.</span></a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+        <li>
+          <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+            <!-- Moon icon (for light mode) -->
+            <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <!-- Sun icon (for dark mode) -->
+            <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+        </li>
+      </ul>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section id="home">
+    <div class="hero-inner">
+
+      <!-- Left: Text -->
+      <div class="hero-text">
+        <div class="hero-eyebrow">
+          <span class="dot"></span>
+          <span class="label">Available for work · Cairo, EG</span>
+        </div>
+
+        <h1 class="hero-title reveal">
+          Building the<br>
+          web with <em>care</em><br>
+          & craft.
+        </h1>
+
+        <p class="hero-sub reveal" data-d="1">
+          Hi, I'm <strong>Omar Ahmed Fathi</strong> — a Front-End Developer
+          specializing in clean, responsive, and user-friendly web applications.
+          I turn ideas into polished digital experiences.
+        </p>
+
+        <div class="hero-actions reveal" data-d="2">
+          <a href="#projects" class="btn-primary">View My Work →</a>
+          <a href="#about"    class="btn-secondary">About Me</a>
+        </div>
+
+        <div class="hero-socials reveal" data-d="3">
+          <a href="https://www.facebook.com/OmarAhmed8787" target="_blank" rel="noopener" class="social-pill">
+            <img src="download.png" alt="">Facebook
+          </a>
+          <a href="https://www.instagram.com/omarahmed87111" target="_blank" rel="noopener" class="social-pill">
+            <img src="instagram.jpg" alt="">Instagram
+          </a>
+          <a href="https://www.linkedin.com/in/omar-ahmed-b2357a26a" target="_blank" rel="noopener" class="social-pill">
+            <img src="linked.png" alt="">LinkedIn
+          </a>
+          <a href="https://wa.me/qr/S2F5TFCACLSGJ1" target="_blank" rel="noopener" class="social-pill">
+            <img src="whats.jpeg" alt="">WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Photo -->
+      <div class="hero-photo-wrap reveal from-right">
+        <div class="hero-photo-card">
+          <img src="omar1.jpg" alt="Omar Ahmed Fathi">
+        </div>
+        <div class="hero-badge">
+          <span class="status-dot"></span> Open to opportunities
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════ ABOUT ═══════════ -->
+  <section id="about">
+    <div class="section-wrap">
+
+      <div class="section-header reveal">
+        <div>
+          <div class="section-num">01 / About</div>
+          <h2 class="section-title">Who <em>I am</em></h2>
+        </div>
+        <a href="#contact" class="btn-secondary" style="flex-shrink:0">Let's Talk →</a>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-photo reveal from-left">
+          <img src="omar1.jpg" alt="Omar Ahmed">
+          <p class="about-photo-caption">Omar Ahmed Fathi — Minia, Egypt</p>
+        </div>
+
+        <div class="about-content reveal from-right" data-d="1">
+          <h2>Front-End Developer<br>& Digital <em>Craftsman</em></h2>
+
+          <p class="about-body" style="margin-top:1.25rem">
+            I'm a passionate Front-End Developer with a background in Media at
+            Minia University. I completed the Front-End Basics course on the
+            Mishkat platform, and since then I've been building real-world projects
+            that blend functionality with visual clarity.
+          </p>
+
+          <p class="about-body">
+            I enjoy working on the intersection of design and code — making
+            things that look great, feel intuitive, and perform well across all
+            screen sizes.
+          </p>
+
+          <div class="info-row">
+            <div class="info-item">
+              <div class="info-label">University</div>
+              <div class="info-value">Minia University</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Faculty</div>
+              <div class="info-value">Arts — Media Dept.</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">English Level</div>
+              <div class="info-value">B1 (Intermediate)</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Status</div>
+              <div class="info-value" style="color:#3ecf8e; font-weight:600">Open to Work ✓</div>
+            </div>
+          </div>
+
+          <p class="label" style="margin-bottom:0.75rem">General Skills</p>
+          <div class="general-skills-badges">
+            <span class="gen-badge">🎨 Graphic Design</span>
+            <span class="gen-badge">🎬 Video Editing</span>
+            <span class="gen-badge">👥 HR Basics</span>
+            <span class="gen-badge">💻 ICDL</span>
+          </div>
+
+          <p class="label" style="margin-bottom:1rem; margin-top:1.5rem">Future Goals</p>
+          <ul class="goals-list">
+            <li>Master React.js and modern JS frameworks.</li>
+            <li>Transition to Full-Stack via .NET Back-End.</li>
+            <li>Contribute to open-source projects.</li>
+            <li>Deepen UI/UX design knowledge.</li>
+            <li>Work with international teams in tech.</li>
+          </ul>
+
+          <div style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap">
+            <a href="#" class="btn-primary">Download CV →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════ SKILLS ═══════════ -->
+  <section id="skills">
+    <div class="section-wrap">
+
+      <div class="section-header reveal">
+        <div>
+          <div class="section-num">02 / Skills</div>
+          <h2 class="section-title">What I <em>work with</em></h2>
+        </div>
+      </div>
+
+      <!-- ── Core ──────────────────────────────── -->
+      <p class="skills-group-label reveal">Core Languages</p>
+      <div class="skills-list" id="skillsList">
+        <div class="skill-row reveal" data-d="1">
+          <div class="skill-name"><img src="html1.jpg" alt="HTML5">HTML5</div>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="90"></div></div>
+          <div class="skill-pct">90%</div>
+        </div>
+        <div class="skill-row reveal" data-d="2">
+          <div class="skill-name"><img src="css.jpg" alt="CSS3">CSS3</div>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="85"></div></div>
+          <div class="skill-pct">85%</div>
+        </div>
+        <div class="skill-row reveal" data-d="3">
+          <div class="skill-name"><img src="JS.jpg" alt="JavaScript">JavaScript (ES6+)</div>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="78"></div></div>
+          <div class="skill-pct">78%</div>
+        </div>
+        <div class="skill-row reveal" data-d="4">
+          <div class="skill-name">
+            <svg class="skill-svg-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="6" fill="#3178C6"/><text x="6" y="22" font-size="11" font-weight="700" fill="#fff" font-family="monospace">TS</text></svg>
+            TypeScript
+          </div>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="70"></div></div>
+          <div class="skill-pct">70%</div>
+        </div>
+      </div>
+
+      <!-- ── Frameworks ─────────────────────────── -->
+      <p class="skills-group-label reveal" style="margin-top:2.5rem">Frameworks &amp; Libraries</p>
+      <div class="skills-list">
+        <div class="skill-row reveal" data-d="1">
+          <div class="skill-name">
+            <svg class="skill-svg-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="6" fill="#DD0031"/><polygon points="16,5 5.5,9.8 7.2,23.8 16,28.5 24.8,23.8 26.5,9.8" fill="#C3002F"/><polygon points="16,5 16,28.5 24.8,23.8 26.5,9.8" fill="#DD0031"/><polygon points="16,9 10,22 12.3,22 13.6,18.8 18.4,18.8 19.7,22 22,22" fill="#fff"/><polygon points="16,12.5 17.9,17.2 14.1,17.2" fill="#fff" opacity=".5"/></svg>
+            Angular
+          </div>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="72"></div></div>
+          <div class="skill-pct">72%</div>
+        </div>
+        <div class="skill-row reveal" data-d="2">
+          <div class="skill-name"><img src="boots.jpg" alt="Bootstrap">Bootstrap</div>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="82"></div></div>
+          <div class="skill-pct">82%</div>
+        </div>
+        <div class="skill-row reveal" data-d="3">
+          <div class="skill-name">
+            <svg class="skill-svg-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="6" fill="#e8f4fd"/><rect x="6" y="8" width="20" height="3" rx="1.5" fill="#3a3843"/><rect x="6" y="14" width="14" height="3" rx="1.5" fill="#3a3843"/><rect x="6" y="20" width="17" height="3" rx="1.5" fill="#3a3843"/><path d="M23 14.5v6l4-3-4-3z" fill="#c9a96e"/></svg>
+            Responsive Web Design
+          </div>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="88"></div></div>
+          <div class="skill-pct">88%</div>
+        </div>
+      </div>
+
+      <!-- ── Tools ─────────────────────────────── -->
+      <p class="skills-group-label reveal" style="margin-top:2.5rem">Tools &amp; Workflow</p>
+      <div class="skills-list">
+        <div class="skill-row reveal" data-d="1">
+          <div class="skill-name">
+            <svg class="skill-svg-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="6" fill="#f5f5f5"/><circle cx="11" cy="12" r="4" stroke="#F05032" stroke-width="1.8" fill="none"/><circle cx="22" cy="12" r="4" stroke="#F05032" stroke-width="1.8" fill="none"/><circle cx="16" cy="21" r="4" stroke="#F05032" stroke-width="1.8" fill="none"/><line x1="14.5" y1="15.5" x2="11" y2="16.5" stroke="#F05032" stroke-width="1.3"/><line x1="17.5" y1="15.5" x2="22" y2="16.5" stroke="#F05032" stroke-width="1.3"/></svg>
+            Git &amp; GitHub
+          </div>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="80"></div></div>
+          <div class="skill-pct">80%</div>
+        </div>
+
+        <div class="skill-row reveal">
+          <div class="skill-name">
+            <svg class="skill-svg-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="6" fill="#f3f0eb"/><path d="M8 11 Q16 7 24 11 Q20 21 16 24 Q12 21 8 11Z" stroke="#c9a96e" stroke-width="1.8" fill="none"/><circle cx="16" cy="16" r="2.5" fill="#c9a96e"/></svg>
+            REST APIs
+          </div>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="75"></div></div>
+          <div class="skill-pct">75%</div>
+        </div>
+        <div class="skill-row reveal" data-d="1">
+          <div class="skill-name">
+            <svg class="skill-svg-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="6" fill="#f3f0eb"/><text x="5" y="19" font-size="9" font-weight="700" fill="#131217" font-family="'Sora',sans-serif">Soft.</text><text x="5" y="27" font-size="8" font-weight="600" fill="#8e8b96" font-family="'Sora',sans-serif">Eng.</text></svg>
+            Software Engineering
+          </div>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="76"></div></div>
+          <div class="skill-pct">76%</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════ PROJECTS ═══════════ -->
+  <section id="projects">
+    <div class="section-wrap">
+
+      <div class="section-header reveal">
+        <div>
+          <div class="section-num">03 / Projects</div>
+          <h2 class="section-title">Things I've <em>built</em></h2>
+        </div>
+      </div>
+
+      <div id="dynamicProjectsGrid" class="projects-grid">
+        <!-- Projects will be dynamically loaded here by script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CONTACT ═══════════ -->
+  <section id="contact">
+    <div class="section-wrap">
+
+      <div class="section-header reveal">
+        <div>
+          <div class="section-num">04 / Contact</div>
+          <h2 class="section-title">Let's <em>connect</em></h2>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+
+        <!-- Left: Info -->
+        <div class="contact-intro reveal from-left">
+          <h3>Every great project<br>starts with a message.</h3>
+          <p>Whether you have a project in mind, a question, or just want to say hello — my inbox is open. Fill in the form or reach me directly:</p>
+
+          <div class="contact-links">
+            <a href="https://www.linkedin.com/in/omar-ahmed-b2357a26a" target="_blank" rel="noopener" class="contact-link-item">
+              <img src="linked.png" alt="LinkedIn"> linkedin.com/in/omar-ahmed
+            </a>
+            <a href="https://wa.me/qr/S2F5TFCACLSGJ1" target="_blank" rel="noopener" class="contact-link-item">
+              <img src="whats.jpeg" alt="WhatsApp"> WhatsApp Direct Link
+            </a>
+            <a href="https://www.instagram.com/omarahmed87111" target="_blank" rel="noopener" class="contact-link-item">
+              <img src="instagram.jpg" alt="Instagram"> @omarahmed87111
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="reveal from-right" data-d="1">
+          <div id="formMessage" class="d-none" style="display:none"></div>
+          <form id="contactForm" class="contact-form-wrap" novalidate>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem">
+              <div class="field-group">
+                <label class="field-label">Full Name</label>
+                <input type="text" id="name" class="field-input" required placeholder="John Doe">
+              </div>
+              <div class="field-group">
+                <label class="field-label">Email Address</label>
+                <input type="email" id="email" class="field-input" required placeholder="you@example.com">
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Preferred Contact</label>
+              <select id="contactVia" class="field-select">
+                <option value="Email">Email</option>
+                <option value="WhatsApp">WhatsApp / Phone</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Message</label>
+              <textarea id="message" class="field-textarea" required placeholder="Tell me about your project or idea…"></textarea>
+            </div>
+            <button type="submit" class="form-submit" id="submitBtn">Send Message →</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer>
+    <p>&copy; 2026 Omar Ahmed Fathi. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
