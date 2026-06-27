@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (projectsGrid) {
     async function loadProjects() {
       try {
-        const res = await fetch('http://localhost:5000/api/projects');
+        const res = await fetch('/api/projects');
         if (res.ok) {
           const projects = await res.json();
           if (projects.length === 0) {
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const form       = document.getElementById('contactForm');
   const msgEl      = document.getElementById('formMessage');
   const submitBtn  = document.getElementById('submitBtn');
-  const API        = 'http://localhost:5000/api/contact';
+  const API        = '/api/contact';
 
   if (form) {
     form.addEventListener('submit', async (e) => {
